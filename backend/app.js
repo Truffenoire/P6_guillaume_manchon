@@ -18,9 +18,12 @@ const app = express();
 
 // Autorisation d'accès au differente methode
 app.use(helmet())
+// pour Helmet qui me bloque les images.
+app.use(helmet.crossOriginResourcePolicy())
+// -----------------------------------------
 app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Origin", "*");
-    // pour Helmet qui me bloque les images sinon... a voir avec mentor
+    // pour Helmet qui me bloque les images sinon...
     res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
     // -----------------------------------------------------------
     res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization");
@@ -30,7 +33,7 @@ app.use((req, res, next) => {
   
 app.use(express.json());  
 
-// gestion de requête vers le dossier images/
+// gestion de requête vers le dossier images/-- chemin d'accès absolu.
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 app.use('/api/auth/', userRoutes);

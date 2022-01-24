@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, process.env.SECRET_TOKEN);
     const userId = decodedToken.userId;
-// Si l'userId ne correspond pas renvoir erreur 403
+// Si l'userId est présent et que celui ci est different, renvoi erreur 403
     if (req.body.userId && req.body.userId !== userId) {
       throw res.status(403).json({message: "utilisateur non autorisé."});
 // sinon passe a la suite dans route (multer, method etc...)
